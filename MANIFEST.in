@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include shipengine *.css
+recursive-include shipengine *.csv
+recursive-include shipengine *.html
+recursive-include shipengine *.ico
+recursive-include shipengine *.js
+recursive-include shipengine *.json
+recursive-include shipengine *.md
+recursive-include shipengine *.png
+recursive-include shipengine *.py
+recursive-include shipengine *.svg
+recursive-include shipengine *.txt
+recursive-exclude shipengine *.pyc
