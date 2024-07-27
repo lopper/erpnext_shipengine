@@ -1,0 +1,239 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-26 15:13:18.973977",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "heading_ship_from",
+  "company_address_name",
+  "company_address",
+  "field_column_break1",
+  "heading_ship_to",
+  "customer",
+  "customer_address",
+  "bill_to_account",
+  "bill_to_party",
+  "collect_postal_code",
+  "section_break_p1wqj",
+  "heading_delivery_note",
+  "delivery_note",
+  "heading_package",
+  "section_break_3fpmm",
+  "package_weight",
+  "column_break_tyvms",
+  "package_weight_uom",
+  "column_break_1uorp",
+  "column_break_v8pvu",
+  "section_break_ujpto",
+  "package_length",
+  "column_break_vtmdw",
+  "package_width",
+  "column_break_fomtu",
+  "package_height",
+  "column_break_u1hqg",
+  "uom",
+  "amended_from",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "heading_ship_from",
+   "fieldtype": "Heading",
+   "label": "Ship From"
+  },
+  {
+   "fieldname": "company_address_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company Address",
+   "options": "Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company_address",
+   "fieldtype": "Small Text",
+   "max_height": "240 px",
+   "read_only": 1
+  },
+  {
+   "fieldname": "field_column_break1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "heading_ship_to",
+   "fieldtype": "Heading",
+   "label": "Ship To"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Small Text",
+   "label": "Customer Address",
+   "max_height": "240px",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bill_to_account",
+   "fieldtype": "Data",
+   "label": "Collect Account"
+  },
+  {
+   "fieldname": "bill_to_party",
+   "fieldtype": "Data",
+   "label": "Collect Party"
+  },
+  {
+   "fieldname": "collect_postal_code",
+   "fieldtype": "Data",
+   "label": "Collect Postal Code"
+  },
+  {
+   "fieldname": "section_break_p1wqj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "heading_delivery_note",
+   "fieldtype": "Heading",
+   "label": "Delivery Note"
+  },
+  {
+   "fieldname": "delivery_note",
+   "fieldtype": "Link",
+   "label": "Delivery Note",
+   "options": "Delivery Note"
+  },
+  {
+   "fieldname": "heading_package",
+   "fieldtype": "Heading",
+   "label": "Package"
+  },
+  {
+   "fieldname": "section_break_3fpmm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "columns": 3,
+   "fieldname": "package_weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tyvms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Pound",
+   "fieldname": "package_weight_uom",
+   "fieldtype": "Link",
+   "label": "Weight UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1uorp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_v8pvu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ujpto",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "package_length",
+   "fieldtype": "Int",
+   "label": "Length",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "column_break_vtmdw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "package_width",
+   "fieldtype": "Int",
+   "label": "Width",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_fomtu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "package_height",
+   "fieldtype": "Int",
+   "label": "Height",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_u1hqg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Inch",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Size UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shipping Label",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shipping Label",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-26 15:13:18.973977",
+ "modified_by": "Administrator",
+ "module": "Shipengine Integration",
+ "name": "Shipping Label",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
