@@ -302,6 +302,14 @@ def setup_custom_fields():
 				insert_after="collect_account"
 			)
 		],
+		"Delivery Note": [
+			dict(
+				fieldname="shipping_labels",
+				label="Shipping Labels",
+				fieldtype="html",
+				insert_before="taxes_section"
+			),
+		],
 		"Shipment Parcel Template": [
 			dict(
 				fieldname="weight_uom",
