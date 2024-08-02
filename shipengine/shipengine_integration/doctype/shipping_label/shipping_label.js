@@ -138,15 +138,6 @@ frappe.ui.form.on('Shipping Label', {
 			get_shipping_rate_estimates(frm);
 		}
 	},
-	company_address: function (frm) {
-		frappe.db.get_value('Address', {
-			address_title: frm.doc.company,
-			is_your_company_address: 1
-		}, 'name', (r) => {
-			frm.set_value("company_address_name", r.name);
-		});
-	},
-
 
 	customer_address_name: function (frm) {
 		erpnext.utils.get_address_display(frm, 'customer_address_name', 'customer_address', true);
