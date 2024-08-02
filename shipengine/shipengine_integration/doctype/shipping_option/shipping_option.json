@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-27 06:28:50.974038",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "carrier_delivery_days",
+  "carrier_id",
+  "delivery_days",
+  "service_code",
+  "service_type",
+  "shipping_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "carrier_delivery_days",
+   "fieldtype": "Data",
+   "label": "Expected Deliver"
+  },
+  {
+   "fieldname": "carrier_id",
+   "fieldtype": "Data",
+   "label": "Carrier ID"
+  },
+  {
+   "fieldname": "delivery_days",
+   "fieldtype": "Data",
+   "label": "Days"
+  },
+  {
+   "fieldname": "service_code",
+   "fieldtype": "Data",
+   "label": "Service Code"
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Data",
+   "label": "Service Type"
+  },
+  {
+   "fieldname": "shipping_amount",
+   "fieldtype": "Data",
+   "label": "Cost"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_virtual": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-27 06:32:39.438332",
+ "modified_by": "Administrator",
+ "module": "Shipengine Integration",
+ "name": "Shipping Option",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

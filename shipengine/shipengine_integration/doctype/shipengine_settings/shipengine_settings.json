@@ -1,37 +1,52 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2024-07-26 15:12:07.790525",
+ "creation": "2024-07-27 13:22:07.007577",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "api_key"
+  "is_enabled",
+  "api_key",
+  "carrier_ids"
  ],
  "fields": [
   {
+   "depends_on": "eval:doc.is_enabled == 1",
    "fieldname": "api_key",
    "fieldtype": "Data",
    "label": "API Key"
+  },
+  {
+   "depends_on": "eval:doc.is_enabled == 1",
+   "description": "Add 1 carrier id per line",
+   "fieldname": "carrier_ids",
+   "fieldtype": "Small Text",
+   "label": "Carrier IDs"
+  },
+  {
+   "default": "false",
+   "description": "Check to enable shipping label creation using ship engine",
+   "fieldname": "is_enabled",
+   "fieldtype": "Check",
+   "label": "Is Enabled"
   }
  ],
- "index_web_pages_for_search": 1,
+ "issingle": 1,
  "links": [],
- "modified": "2024-07-26 15:12:07.790525",
+ "modified": "2024-08-01 14:32:22.645628",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
- "name": "ShipEngine Settings",
+ "name": "Shipengine Settings",
  "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
-   "export": 1,
    "print": 1,
    "read": 1,
-   "report": 1,
    "role": "System Manager",
    "share": 1,
    "write": 1
