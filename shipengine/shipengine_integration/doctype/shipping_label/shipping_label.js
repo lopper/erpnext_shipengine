@@ -78,7 +78,29 @@ frappe.ui.form.on('Shipping Label', {
 	},
 
 	before_save: function (frm) {
+		// ensure that weight, length, height, and width are set
+		if (!frm.doc.package_weight || !frm.doc.package_length || !frm.doc.package_width || !frm.doc.package_height) {
+			// error
+			frappe.msgprint({
+				title: __('Error'),
+				indicator: 'red',
+				message: __('Please ensure that package weight, length, width, and height are greater than 0')
+			});
 
+			frappe.validated = false;
+			return
+		}
+
+		// ensure that service code and carrier id are set
+		if (!frm.doc.service_id || !frm.doc.carrier_id) {
+			frappe.msgprint({
+				title: __('Error'),
+				indicator: 'red',
+				message: __('Please select a shipping option')
+			});
+			frappe.validated = false;
+			return
+		}
 	},
 
 	package_height: function (frm) {
