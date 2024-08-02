@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "SL.YY.######",
  "creation": "2024-07-26 15:13:18.973977",
  "default_view": "List",
@@ -45,9 +44,9 @@
   "section_break_s74kz",
   "shipping_options_html",
   "section_break_ohqnr",
-  "shipping_option_service_id",
+  "service_id",
   "column_break_xa9io",
-  "shipping_option_carrier_id",
+  "carrier_id",
   "section_break_aamnw",
   "shipment_id",
   "label_id",
@@ -112,7 +111,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Delivery Note",
-   "options": "Delivery Note"
+   "options": "Delivery Note",
+   "read_only": 1
   },
   {
    "fieldname": "heading_package",
@@ -263,20 +263,6 @@
    "label": "Shipping Options"
   },
   {
-   "fieldname": "shipping_option_service_id",
-   "fieldtype": "Data",
-   "label": "Service ID",
-   "read_only": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "shipping_option_carrier_id",
-   "fieldtype": "Data",
-   "label": "Carrier ID",
-   "read_only": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_xa9io",
    "fieldtype": "Column Break"
   },
@@ -336,12 +322,26 @@
    "fieldname": "customer_attention",
    "fieldtype": "Data",
    "label": "Attention"
+  },
+  {
+   "fieldname": "service_id",
+   "fieldtype": "Data",
+   "label": "Service ID",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "carrier_id",
+   "fieldtype": "Data",
+   "label": "Carrier ID",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-02 08:33:56.530471",
+ "modified": "2024-08-02 09:58:12.489871",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipping Label",
@@ -358,6 +358,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

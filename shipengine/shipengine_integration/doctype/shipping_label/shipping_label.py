@@ -49,7 +49,7 @@ class ShippingLabel(Document):
 		if flt(self.package_height) <= 0:
 			frappe.throw(_("Package height cannot be 0"))
 
-		if not self.shipping_option_service_id:
+		if not self.service_id:
 			frappe.throw(_("Shipping option must be selected"))
 
 		self.try_create_shipping_label()
@@ -121,8 +121,8 @@ class ShippingLabel(Document):
 				postal_code=self.collect_postal_code)
 		label = get_shipping_label(
 			shipengine_settings.api_key, 
-			self.shipping_option_carrier_id,
-			self.shipping_option_service_id,
+			self.carrier_id,
+			self.service_id,
 			"",
 			Address(
 				company_name="",

@@ -242,8 +242,8 @@ function render_shipping_options(frm, shipping_options) {
 
 		radioButton.prop('checked', true);
 
-		frm.set_value('shipping_option_service_id', serviceCode);
-		frm.set_value('shipping_option_carrier_id', carrierId);
+		frm.set_value('service_id', serviceCode);
+		frm.set_value('carrier_id', carrierId);
 		// Remove highlight from all options
 		$('.shipping-option').each(function () {
 			// Reset inline styles
@@ -282,7 +282,12 @@ var get_shipping_rate_estimates = function (frm) {
 	if (fetching_rates) {
 		return false
 	}
-	var msg = frappe.msgprint('Getting shipping rates...');
+	var msg = frappe.msgprint({
+		title: __('Loading...'),
+		indicator: 'blue',
+		message: __('Fetching shipping rates')
+	});
+
 	let package_weight = frm.doc.package_weight;
 	let package_weight_uom = frm.doc.package_weight_uom;
 	let package_size_uom = frm.doc.package_size_uom;
@@ -316,8 +321,8 @@ var get_shipping_rate_estimates = function (frm) {
 				}
 				render_shipping_options(frm, r.message)
 				// make carrier id and service_code empty
-				frm.set_value('shipping_option_service_id', '');
-				frm.set_value('shipping_option_carrier_id', '');
+				frm.set_value('service_id', '');
+				frm.set_value('carrier_id', '');
 			}
 		}
 	});
