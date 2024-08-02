@@ -8,7 +8,7 @@ from frappe import _
 from frappe.contacts.doctype.contact.contact import get_default_contact
 from frappe.model.document import Document
 from frappe.utils import flt, get_time
-from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+#from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 from shipengine.shipengine_integration.shipengine_integration import void_shipping_label, get_shipping_rates, get_shipping_label, Dimensions, Weight, BillTo, Address
 from erpnext.accounts.party import get_party_shipping_address
 from frappe.model.mapper import get_mapped_doc
@@ -285,6 +285,36 @@ def make_shipping_label(source_name, target_doc=None):
 	return doclist
 
 
+def create_custom_fields(custom_fields):
+    for doctype, fields in custom_fields.items():
+        # Retrieve existing custom fields for the doctype
+        existing_fields = frappe.get_all('Custom Field', filters={'dt': doctype}, fields=['fieldname'])
+        existing_fieldnames = {field['fieldname'] for field in existing_fields}
+        
+        for field in fields:
+            fieldname = field.get('fieldname')
+            
+            if fieldname not in existing_fieldnames:
+                try:
+                    # Create the custom field
+                    frappe.get_doc({
+                        'doctype': 'Custom Field',
+                        'dt': doctype,
+                        'fieldname': fieldname,
+                        'label': field.get('label'),
+                        'fieldtype': field.get('fieldtype'),
+                        'insert_after': field.get('insert_after'),
+                        'insert_before': field.get('insert_before'),
+                        'options': field.get('options')
+                    }).insert()
+                    
+                    print(f"Created custom field '{fieldname}' in '{doctype}'")
+                
+                except Exception as e:
+                    print(f"Error creating custom field '{fieldname}' in '{doctype}': {e}")
+            else:
+                print(f"Field '{fieldname}' already exists in '{doctype}'")
+
 
 def setup_custom_fields():
 	custom_fields = {
@@ -306,7 +336,7 @@ def setup_custom_fields():
 			dict(
 				fieldname="shipping_labels",
 				label="Shipping Labels",
-				fieldtype="html",
+				fieldtype="HTML",
 				insert_before="taxes_section"
 			),
 		],

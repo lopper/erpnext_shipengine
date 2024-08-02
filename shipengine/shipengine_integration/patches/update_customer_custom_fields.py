@@ -1,6 +1,6 @@
 import frappe
 
-from shipengine_integration.doctype.shipping_label import (
+from shipengine.shipengine_integration.doctype.shipping_label.shipping_label import (
 	setup_custom_fields,
 )
 
