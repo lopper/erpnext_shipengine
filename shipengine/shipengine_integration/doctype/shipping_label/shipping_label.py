@@ -41,13 +41,13 @@ class ShippingLabel(Document):
 
 	def on_submit(self):
 		if flt(self.package_weight) <= 0:
-			frappe.throw(_("Parcel weight cannot be 0"))
+			frappe.throw(_("Package weight cannot be 0"))
 		if flt(self.package_length) <= 0:
-			frappe.throw(_("Parcel length cannot be 0"))
+			frappe.throw(_("Package length cannot be 0"))
 		if flt(self.package_width) <= 0:
-			frappe.throw(_("Parcel width cannot be 0"))
+			frappe.throw(_("Package width cannot be 0"))
 		if flt(self.package_height) <= 0:
-			frappe.throw(_("Parcel height cannot be 0"))
+			frappe.throw(_("Package height cannot be 0"))
 
 		if not self.shipping_option_service_id:
 			frappe.throw(_("Shipping option must be selected"))
@@ -137,7 +137,7 @@ class ShippingLabel(Document):
 				address_residential_indicator="unknown"
 			),
 			Address(
-				company_name="",
+				company_name=self.customer_attention,
 				name=customer_name,
 				phone=customer_address.phone or ".",
 				address_line1=customer_address.address_line1,

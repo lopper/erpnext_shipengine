@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "SL.YY.######",
  "creation": "2024-07-26 15:13:18.973977",
  "default_view": "List",
  "doctype": "DocType",
@@ -14,6 +15,7 @@
   "field_column_break1",
   "heading_ship_to",
   "customer",
+  "customer_attention",
   "customer_address_name",
   "customer_address",
   "section_break_ymlyy",
@@ -329,15 +331,21 @@
    "fieldtype": "Link",
    "label": "Package Template",
    "options": "Shipment Parcel Template"
+  },
+  {
+   "fieldname": "customer_attention",
+   "fieldtype": "Data",
+   "label": "Attention"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-01 20:39:37.139641",
+ "modified": "2024-08-02 08:33:56.530471",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipping Label",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
