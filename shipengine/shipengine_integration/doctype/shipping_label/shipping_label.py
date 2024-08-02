@@ -290,7 +290,8 @@ def setup_custom_fields():
 	custom_fields = {
 		"Customer": [
 			dict(
-				label="collect_account",
+				fieldname="collect_account",
+				label="Collect Account",
 				fieldtype="Data",
 				insert_after="customer_group"
 			),
