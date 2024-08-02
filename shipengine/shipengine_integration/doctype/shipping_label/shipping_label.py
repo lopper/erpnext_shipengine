@@ -275,7 +275,7 @@ def make_shipping_label(source_name, target_doc=None):
 					"shipping_address": "customer_address",
 					"company_address_display": "company_address",
 				},
-				"validation": {"docstatus": ["=", 1]},
+				"validation": {"docstatus": ["=", 0]},
 			}
 		},
 		target_doc,
