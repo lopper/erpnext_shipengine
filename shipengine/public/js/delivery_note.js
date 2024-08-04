@@ -33,9 +33,10 @@ frappe.ui.form.on('Delivery Note', {
                 if (r.message && r.message.length > 0) {
                     // render infromation in custom_shipments_info field
                     let html = "<table class='table table-bordered'>";
-                    html += "<tr><th>Tracking Number</th><th>Service</th><th>Shipment Cost</th></tr>";
+                    html += "<tr><th>Label ID</th><th>Tracking Number</th><th>Service</th><th>Shipment Cost</th></tr>";
                     r.message.forEach((shipment) => {
-                        html += `<tr><td>${shipment.tracking_number}</td><td>${shipment.service_id}</td><td>${shipment.shipment_cost}</td></tr>`;
+                        let labelUrl = `/app/shipping-label/${shipment.name}`;
+                        html += `<tr><td><a href="${labelUrl}">${shipment.name}</a><td>${shipment.tracking_number}</td><td>${shipment.service_id}</td><td>${shipment.shipment_cost}</td></tr>`;
                     });
                     html += "</table>";
                     if (frm.fields_dict.shipping_labels) {
