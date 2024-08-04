@@ -320,10 +320,18 @@ def setup_custom_fields():
 	custom_fields = {
 		"Customer": [
 			dict(
-				fieldname="collect_account",
-				label="Collect Account",
-				fieldtype="Data",
+				fieldname="collect_account_type",
+				label="Collect Account Type",
+				fieldtype="Select",
+				options="\nUPS\nFEDEX",
 				insert_after="customer_group"
+			),
+
+			dict(
+				fieldname="collect_account",
+				label="Collect Account Number",
+				fieldtype="Data",
+				insert_after="collect_account_type"
 			),
 			dict(
 				fieldname="collect_postal_code",
