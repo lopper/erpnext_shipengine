@@ -9,7 +9,7 @@
  "field_order": [
   "is_enabled",
   "api_key",
-  "carrier_ids"
+  "carriers"
  ],
  "fields": [
   {
@@ -19,23 +19,22 @@
    "label": "API Key"
   },
   {
-   "depends_on": "eval:doc.is_enabled == 1",
-   "description": "Add 1 carrier id per line",
-   "fieldname": "carrier_ids",
-   "fieldtype": "Small Text",
-   "label": "Carrier IDs"
-  },
-  {
    "default": "false",
    "description": "Check to enable shipping label creation using ship engine",
    "fieldname": "is_enabled",
    "fieldtype": "Check",
    "label": "Is Enabled"
+  },
+  {
+   "fieldname": "carriers",
+   "fieldtype": "Table",
+   "label": "Carriers",
+   "options": "Shipengine Carrier"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2024-08-01 14:32:22.645628",
+ "modified": "2024-08-04 05:08:59.653624",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipengine Settings",

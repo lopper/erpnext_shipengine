@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "CAR.####",
+ "creation": "2024-08-04 05:07:15.527696",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "carrier_id",
+  "carrier_code",
+  "friendly_name",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "carrier_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Carrier ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "carrier_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Carrier Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "friendly_name",
+   "fieldtype": "Data",
+   "label": "Friendly Name"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shipengine Carrier",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-08-04 05:07:55.589232",
+ "modified_by": "Administrator",
+ "module": "Shipengine Integration",
+ "name": "Shipengine Carrier",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

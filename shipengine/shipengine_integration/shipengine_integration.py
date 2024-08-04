@@ -176,3 +176,14 @@ def get_shipping_label(api_key,
     response = requests.post(url, headers=headers, data=json.dumps(payload))
     
     return response.json()  # Return the response as a JSON object
+
+def get_carrier_services(api_key):
+    url = base_url + "/carriers"
+    
+    headers = {
+        'API-Key': api_key,
+        'Content-Type': 'application/json'
+    }
+    response = requests.get(url, headers=headers)
+    
+    return response.json()  # Return the response as a JSON object
