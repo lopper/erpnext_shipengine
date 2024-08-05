@@ -322,8 +322,8 @@ def setup_custom_fields():
 			dict(
 				fieldname="collect_account_type",
 				label="Collect Account Type",
-				fieldtype="Select",
-				options="\nUPS\nFEDEX",
+				fieldtype="Link",
+				options="Collect Account Type",
 				insert_after="customer_group"
 			),
 
