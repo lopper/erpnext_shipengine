@@ -18,6 +18,8 @@
   "customer_address_name",
   "customer_address",
   "section_break_ymlyy",
+  "collect_account_type",
+  "column_break_0hand",
   "collect_account",
   "column_break_pgeui",
   "collect_postal_code",
@@ -92,7 +94,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.customer",
+   "depends_on": "eval:doc.collect_account_type",
    "fieldname": "collect_postal_code",
    "fieldtype": "Data",
    "label": "Collect Postal Code"
@@ -239,7 +241,7 @@
    "options": "Company"
   },
   {
-   "depends_on": "eval:doc.customer",
+   "depends_on": "eval:doc.collect_account_type",
    "fieldname": "collect_account",
    "fieldtype": "Data",
    "label": "Collect Account"
@@ -336,12 +338,23 @@
    "label": "Carrier ID",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.customer",
+   "fieldname": "collect_account_type",
+   "fieldtype": "Link",
+   "label": "Collect Account Type",
+   "options": "Collect Account Type"
+  },
+  {
+   "fieldname": "column_break_0hand",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-02 09:58:12.489871",
+ "modified": "2024-08-04 17:36:26.213629",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipping Label",

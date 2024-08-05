@@ -115,10 +115,15 @@ class ShippingLabel(Document):
 		company_name = frappe.get_doc("Company", self.company).company_name
 
 		billTo = None
-		if self.collect_account and self.collect_postal_code:
+		if self.collect_account and self.collect_postal_code and (self.collect_account_type or self.customer_collect_account_type):
 			billTo = BillTo(
 				account=self.collect_account,
 				postal_code=self.collect_postal_code)
+		else:
+			self.collect_account = None
+			self.collect_postal_code = None
+			self.collect_account_type = None
+			self.custom_collect_account_type = None
 		label = get_shipping_label(
 			shipengine_settings.api_key, 
 			self.carrier_id,
@@ -176,13 +181,15 @@ def get_customer_collect_details(customer_name):
     customer = frappe.get_doc("Customer", customer_name)
     
     # Extract the collect_account and collect_postal_code fields
+    collect_account_type = customer.get("collect_account_type") or  customer.get("custom_collect_account_type")
     collect_account = customer.get("collect_account")
     collect_postal_code = customer.get("collect_postal_code")
     
     # Return the collected details
     return {
         "collect_account": collect_account,
-        "collect_postal_code": collect_postal_code
+        "collect_postal_code": collect_postal_code,
+        "collect_account_type": collect_account_type
     }
 
 
@@ -197,7 +204,8 @@ def estimate_shipping_rates(
 	package_length, 
 	package_width, 
 	package_height,
-	package_size_uom):
+	package_size_uom,
+	collect_account_type = None):
     # Fetch the customer document
 	
 	shipengine_settings = frappe.get_doc(SETTING_DOCTYPE)
@@ -227,7 +235,12 @@ def estimate_shipping_rates(
     
 	# get shipengine_settings
 	shipengine_settings = frappe.get_doc(SETTING_DOCTYPE)
-	carrier_ids = shipengine_settings.carrier_ids.split("\n")
+	carriers = shipengine_settings.carriers
+	carrier_ids = [carrier.carrier_id for carrier in carriers]
+	if collect_account_type:
+		carrier_ids = [
+			carrier.carrier_id for carrier in carriers 
+			if carrier.carrier_code.lower().startswith(collect_account_type.lower())]
 
 	rates = get_shipping_rates(
 		shipengine_settings.api_key, 

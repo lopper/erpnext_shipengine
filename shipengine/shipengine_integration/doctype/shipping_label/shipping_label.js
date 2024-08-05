@@ -190,6 +190,9 @@ frappe.ui.form.on('Shipping Label', {
 			callback: function (r) {
 				if (r.message) {
 					if (r.message.collect_account) {
+						frm.set_value('collect_account_type', r.message.collect_account_type);
+					}
+					if (r.message.collect_account) {
 						frm.set_value('collect_account', r.message.collect_account);
 					}
 					if (r.message.collect_postal_code) {
@@ -225,7 +228,7 @@ frappe.ui.form.on('Shipping Label', {
 });
 
 function render_shipping_options(frm, shipping_options) {
-	let html = '<h4>Select a Shipping Option</h4>';
+	let html = `<h4>Select a Shipping Option </h4> ${frm.doc.collect_account ? "Third Party Billing Enabled" : ""} `;
 	if (shipping_options) {
 		shipping_options.forEach(function (option, index) {
 			html += `		
@@ -233,7 +236,7 @@ function render_shipping_options(frm, shipping_options) {
 			<div style="display: flex; align-items: center;">
 				<input type="radio" name="shipping_option" value="${option.service_code}" style="margin-right: 10px;">
 				<div>
-					<strong>${option.service_type} (${option.delivery_days} day)</strong><br>
+					<strong>${option.service_type} (${option.delivery_days ? option.delivery_days : ""} day)</strong><br>
 					<span>Estimated Delivery: ${option.carrier_delivery_days}</span>
 				</div>
 			</div>
@@ -307,6 +310,7 @@ var get_shipping_rate_estimates = function (frm) {
 	let package_length = frm.doc.package_length;
 	let package_width = frm.doc.package_width;
 	let package_height = frm.doc.package_height;
+	let collect_account_type = frm.doc.collect_account_type;
 
 	fetching_rates = true
 	frappe.call({
@@ -319,7 +323,8 @@ var get_shipping_rate_estimates = function (frm) {
 			package_length: package_length,
 			package_width: package_width,
 			package_height: package_height,
-			package_size_uom: package_size_uom
+			package_size_uom: package_size_uom,
+			collect_account_type: collect_account_type
 		},
 		callback: function (r) {
 			frappe.hide_msgprint(msg);
@@ -332,10 +337,15 @@ var get_shipping_rate_estimates = function (frm) {
 						return
 					}
 				}
-				render_shipping_options(frm, r.message)
-				// make carrier id and service_code empty
-				frm.set_value('service_id', '');
-				frm.set_value('carrier_id', '');
+				if (r.message.errors) {
+					frappe.msgprint(r.message.errors[0].message)
+					return
+				} else {
+					render_shipping_options(frm, r.message)
+					// make carrier id and service_code empty
+					frm.set_value('service_id', '');
+					frm.set_value('carrier_id', '');
+				}
 			}
 		}
 	});

@@ -27,7 +27,7 @@ frappe.ui.form.on('Delivery Note', {
                     docstatus: 1,
                     delivery_note: frm.doc.name
                 },
-                fields: ["name", "tracking_number", "service_id", "shipment_cost"]
+                fields: ["name", "tracking_number", "service_id", "shipment_cost", "collect_account"]
             },
             callback: function (r) {
                 if (r.message && r.message.length > 0) {
@@ -36,7 +36,7 @@ frappe.ui.form.on('Delivery Note', {
                     html += "<tr><th>Label ID</th><th>Tracking Number</th><th>Service</th><th>Shipment Cost</th></tr>";
                     r.message.forEach((shipment) => {
                         let labelUrl = `/app/shipping-label/${shipment.name}`;
-                        html += `<tr><td><a href="${labelUrl}">${shipment.name}</a><td>${shipment.tracking_number}</td><td>${shipment.service_id}</td><td>${shipment.shipment_cost}</td></tr>`;
+                        html += `<tr><td><a href="${labelUrl}">${shipment.name}</a><td>${shipment.tracking_number}</td><td>${shipment.service_id}</td><td>${shipment.collect_account ? "Third party" : shipment.shipment_cost}</td></tr>`;
                     });
                     html += "</table>";
                     if (frm.fields_dict.shipping_labels) {
