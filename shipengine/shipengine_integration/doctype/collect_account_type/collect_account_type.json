@@ -36,9 +36,8 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2024-08-04 06:37:39.443592",
+ "modified": "2024-08-05 11:48:34.663617",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Collect Account Type",
