@@ -231,6 +231,9 @@ function render_shipping_options(frm, shipping_options) {
 	let html = `<h4>Select a Shipping Option </h4> ${frm.doc.collect_account ? "Third Party Billing Enabled" : ""} `;
 	if (shipping_options) {
 		shipping_options.forEach(function (option, index) {
+			if (!option.shipping_amount) {
+				return
+			}
 			html += `		
 			<div class="shipping-option" data-service-code="${option.service_code}" data-carrier-id="${option.carrier_id}"  style="padding: 5px; border-bottom: 1px solid #ccc; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
 			<div style="display: flex; align-items: center;">
