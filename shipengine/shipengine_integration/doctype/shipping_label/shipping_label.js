@@ -239,7 +239,7 @@ function render_shipping_options(frm, shipping_options) {
 			<div style="display: flex; align-items: center;">
 				<input type="radio" name="shipping_option" value="${option.service_code}" style="margin-right: 10px;">
 				<div>
-					<strong>${option.service_type} (${option.delivery_days ? option.delivery_days : ""} day)</strong><br>
+					<strong>${option.service_type} ${option.package_type ? option.package_type : ""} (${option.delivery_days ? option.delivery_days : ""} day) </strong><br>
 					<span>Estimated Delivery: ${option.carrier_delivery_days}</span>
 				</div>
 			</div>
