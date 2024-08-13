@@ -29,7 +29,6 @@ class ShippingLabel(Document):
 			frappe.throw(_("Label_id is not set"))
 
 		result = void_shipping_label(shipengine_settings.api_key, label_id)
-		print(result)
 		if result.get('errors'):
 			frappe.throw(result["errors"][0]['message'])
 
@@ -70,9 +69,6 @@ class ShippingLabel(Document):
 	def on_update(self):
 		pass
 
-	
-	def on_cancel(self):
-		self.db_set("status", "Cancelled")
 
 	def validate_weight(self):
 		for parcel in self.shipment_parcel:
