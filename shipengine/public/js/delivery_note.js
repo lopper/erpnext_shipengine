@@ -19,6 +19,9 @@ frappe.ui.form.on('Delivery Note', {
     onload: function (frm) {
 
         // query for all shipping labels
+        if (!frm.fields_dict.shipping_labels) {
+            return
+        }
         $(frm.fields_dict.shipping_labels.wrapper).html("")
         frappe.call({
             method: "frappe.client.get_list",
