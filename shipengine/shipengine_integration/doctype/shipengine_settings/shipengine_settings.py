@@ -26,8 +26,13 @@ def get_carriers():
 	else:
 		return carriers
 
-
 	
+@frappe.whitelist()
+def get_default_shipping_expense_account():
+	shipengine_settings = frappe.get_doc(SETTING_DOCTYPE)
+	if(not shipengine_settings.is_enabled):
+		frappe.throw(_("Please enable ShipEngine Integration"))
+	print(shipengine_settings.shipping_expense_acount)
+	return shipengine_settings.shipping_expense_acount
 	
-
 
