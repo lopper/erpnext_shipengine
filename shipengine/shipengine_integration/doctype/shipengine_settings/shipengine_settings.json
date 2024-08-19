@@ -9,7 +9,8 @@
  "field_order": [
   "is_enabled",
   "api_key",
-  "carriers"
+  "carriers",
+  "shipping_expense_acount"
  ],
  "fields": [
   {
@@ -30,11 +31,17 @@
    "fieldtype": "Table",
    "label": "Carriers",
    "options": "Shipengine Carrier"
+  },
+  {
+   "fieldname": "shipping_expense_acount",
+   "fieldtype": "Link",
+   "label": "Default Shipping Expense Account",
+   "options": "Account"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2024-08-04 05:08:59.653624",
+ "modified": "2024-08-19 13:29:52.152686",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipengine Settings",
