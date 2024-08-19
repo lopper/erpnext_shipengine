@@ -12,6 +12,8 @@ from frappe.utils import flt, get_time
 from shipengine.shipengine_integration.shipengine_integration import void_shipping_label, get_shipping_rates, get_shipping_label, Dimensions, Weight, BillTo, Address
 from erpnext.accounts.party import get_party_shipping_address
 from frappe.model.mapper import get_mapped_doc
+from erpnext.accounts.party import get_default_address
+from frappe.contacts.doctype.address.address import get_address_display
 
 
 from shipengine.shipengine_integration.constants import (
@@ -262,12 +264,26 @@ def make_shipping_label(source_name, target_doc=None):
 		frappe.throw(_("Please enable ShipEngine Integration"))
 
 	def postprocess(source, target):
-		if source.shipping_address_name:
-			target.delivery_address_name = source.shipping_address_name
-			target.delivery_address = source.shipping_address
-		elif source.customer_address:
-			target.delivery_address_name = source.customer_address
-			target.delivery_address = source.address_display
+		if target.company:
+			company_address_name = get_default_address(target.company, "Company", "Shipping")
+
+		if not company_address_name:
+			addresses = frappe.get_all(
+				"Address",
+				filters={
+					"link_doctype": "Company",
+					"link_name": target.company,
+					'address_type': 'Shipping'
+				},
+				fields=["name"]
+			)			
+			if addresses:
+				company_address_name = addresses[0].name  # Pick the first address available
+		print(company_address_name)
+		if company_address_name:
+			company_address = frappe.get_doc("Address", company_address_name)
+			target.company_address_name = company_address_name
+			target.company_address = get_address_display(company_address.as_dict())
 
 	doclist = get_mapped_doc(
 		"Delivery Note",
@@ -277,12 +293,12 @@ def make_shipping_label(source_name, target_doc=None):
 				"doctype": "Shipping Label",
 				"field_map": {
 					"company": "company",
-					"company_address": "company_address_name",
+					#"company_address": "company_address_name",
 					"customer": "customer",
 					"shipping_address_name": "customer_address_name",
 					"name" : "delivery_note",
 					"shipping_address": "customer_address",
-					"company_address_display": "company_address",
+					#"company_address_display": "company_address",
 				},
 				"validation": {"docstatus": ["=", 0]},
 			}
