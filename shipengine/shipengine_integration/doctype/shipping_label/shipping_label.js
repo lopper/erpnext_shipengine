@@ -39,7 +39,8 @@ frappe.ui.form.on('Shipping Label', {
 			return {
 				filters: {
 					'link_name': frm.doc.company,
-					'link_doctype': 'Company'
+					'link_doctype': 'Company',
+					'address_type': 'Shipping'
 				}
 			};
 		});
@@ -215,7 +216,6 @@ frappe.ui.form.on('Shipping Label', {
 			callback: function (r) {
 				if (r.message) {
 					if (isCompany) {
-						alert(r)
 						frm.set_value('company_address_name', r.message);
 					} else {
 						frm.set_value('customer_address_name', r.message);
