@@ -107,10 +107,20 @@ class ShippingLabel(Document):
 				referenceMessages.append("Purchase Order: " + po_no)
 			referenceMessages.append("Delivery Note: " + self.delivery_note)
 
-		# get customer name
-		customer_name = frappe.get_doc("Customer", self.customer).customer_name
-		# get company name
-		company_name = frappe.get_doc("Company", self.company).company_name
+		company_name = None
+		customer_name = None
+		if self.dropship:
+			# use customer's name as company name
+			company_name = frappe.get_doc("Customer", self.customer).customer_name
+			# use customer's address title as customer name
+			customer_name = customer_address.address_title.split("|")[0]
+			# split customer name by | 
+			
+		else:
+			# get customer name
+			customer_name = frappe.get_doc("Customer", self.customer).customer_name
+			# get company name
+			company_name = frappe.get_doc("Company", self.company).company_name
 
 		billTo = None
 		if self.collect_account and self.collect_postal_code and (self.collect_account_type or self.customer_collect_account_type):
@@ -267,6 +277,9 @@ def make_shipping_label(source_name, target_doc=None):
 		if target.company:
 			company_address_name = get_default_address(target.company, "Company", "Shipping")
 
+
+
+
 		if not company_address_name:
 			addresses = frappe.get_all(
 				"Address",
@@ -279,11 +292,13 @@ def make_shipping_label(source_name, target_doc=None):
 			)			
 			if addresses:
 				company_address_name = addresses[0].name  # Pick the first address available
-		print(company_address_name)
 		if company_address_name:
 			company_address = frappe.get_doc("Address", company_address_name)
 			target.company_address_name = company_address_name
 			target.company_address = get_address_display(company_address.as_dict())
+
+		if "|" in target.customer_address_name:
+			target.dropship = 1
 
 	doclist = get_mapped_doc(
 		"Delivery Note",
