@@ -10,7 +10,8 @@
   "is_enabled",
   "api_key",
   "carriers",
-  "shipping_expense_acount"
+  "shipping_expense_acount",
+  "default_address_phone_number"
  ],
  "fields": [
   {
@@ -37,11 +38,18 @@
    "fieldtype": "Link",
    "label": "Default Shipping Expense Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "default_address_phone_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Default Address Phone Number",
+   "reqd": 1
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2024-08-19 13:29:52.152686",
+ "modified": "2024-08-28 14:58:48.042438",
  "modified_by": "Administrator",
  "module": "Shipengine Integration",
  "name": "Shipengine Settings",

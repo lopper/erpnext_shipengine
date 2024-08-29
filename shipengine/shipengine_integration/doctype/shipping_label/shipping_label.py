@@ -130,7 +130,7 @@ class ShippingLabel(Document):
 			Address(
 				company_name="",
 				name=company_name,
-				phone=company_address.phone or ".",
+				phone=company_address.phone or shipengine_settings.default_address_phone_number,
 				address_line1=company_address.address_line1,
 				address_line2=company_address.address_line2,
 				city_locality=company_address.city,
@@ -142,7 +142,7 @@ class ShippingLabel(Document):
 			Address(
 				company_name=self.customer_attention,
 				name=customer_name,
-				phone=customer_address.phone or ".",
+				phone=customer_address.phone or shipengine_settings.default_address_phone_number,
 				address_line1=customer_address.address_line1,
 				address_line2=customer_address.address_line2,
 				city_locality=customer_address.city,
