@@ -138,7 +138,7 @@ class ShippingLabel(Document):
 			self.service_id,
 			"",
 			Address(
-				company_name="",
+				company_name=company_name,
 				name=company_name,
 				phone=company_address.phone or shipengine_settings.default_address_phone_number,
 				address_line1=company_address.address_line1,
