@@ -123,7 +123,7 @@ class ShippingLabel(Document):
 			company_name = frappe.get_doc("Company", self.company).company_name
 
 		billTo = None
-		if self.collect_account and self.collect_postal_code and (self.collect_account_type or self.customer_collect_account_type):
+		if self.collect_account and self.collect_postal_code and (self.collect_account_type or (hasattr(self, 'customer_collect_account_type') and self.customer_collect_account_type)):
 			billTo = BillTo(
 				account=self.collect_account,
 				postal_code=self.collect_postal_code)
