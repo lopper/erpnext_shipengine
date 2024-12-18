@@ -296,9 +296,18 @@ def make_shipping_label(source_name, target_doc=None):
 			company_address = frappe.get_doc("Address", company_address_name)
 			target.company_address_name = company_address_name
 			target.company_address = get_address_display(company_address.as_dict())
-
-		if "|" in target.customer_address_name:
-			target.dropship = 1
+	
+		# enable drop ship if the sales order is marked as dropship
+		delivery_note = frappe.get_doc("Delivery Note", target.delivery_note)	
+		if delivery_note and len(delivery_note.items) > 0 and delivery_note.items[0].against_sales_order:
+			sales_order = frappe.get_doc("Sales Order", delivery_note.items[0].against_sales_order)
+			if (hasattr(sales_order, 'dropship') and sales_order.dropship) or \
+				(hasattr(sales_order, 'custom_dropship') and sales_order.custom_dropship):
+				target.dropship = 1
+			# attempt to poluate collect 
+		#if "|" in target.customer_address_name:
+		#	print("****drop set ")
+		#	target.dropship = 1
 
 	doclist = get_mapped_doc(
 		"Delivery Note",
