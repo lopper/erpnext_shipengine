@@ -20,7 +20,25 @@ from shipengine.shipengine_integration.constants import (
 	SETTING_DOCTYPE
 )
 
+def parse_key_value_pairs(input_string):
+    """
+    Parses key-value pairs from a string formatted as 'key:value, key:value, ...'.
+
+    Args:
+        input_string (str): The input string containing key-value pairs.
+
+    Returns:
+        dict: A dictionary with keys and values parsed from the string.
+    """
+    pairs = input_string.split(',')  # Split by commas
+    result = {}
+    for pair in pairs:
+        key, value = pair.split(':', 1)  # Split by the first colon
+        result[key.strip()] = value.strip()  # Remove extra spaces and store in dictionary
+    return result
+
 class ShippingLabel(Document):
+
 	def validate(self):
 		if self.docstatus == 0:
 			self.status = "Draft"
@@ -223,7 +241,6 @@ def estimate_shipping_rates(
 
 	# get customer_adddress
 	customer_address = frappe.get_doc("Address", customer_address_name)
-    
 	# get company_address
 	company_address = frappe.get_doc("Address", company_address_name)
 
@@ -277,9 +294,6 @@ def make_shipping_label(source_name, target_doc=None):
 		if target.company:
 			company_address_name = get_default_address(target.company, "Company", "Shipping")
 
-
-
-
 		if not company_address_name:
 			addresses = frappe.get_all(
 				"Address",
@@ -304,6 +318,28 @@ def make_shipping_label(source_name, target_doc=None):
 			if (hasattr(sales_order, 'dropship') and sales_order.dropship) or \
 				(hasattr(sales_order, 'custom_dropship') and sales_order.custom_dropship):
 				target.dropship = 1
+		if target.dropship:
+			collect_account_type = None
+			incoterm = frappe.get_doc("Incoterm", delivery_note.incoterm)
+			named_place = delivery_note.named_place
+			# name_place can encode collect information if it containts collect
+			if not named_place or "collect:" not in named_place.lower():
+				pass
+
+			if not incoterm or not incoterm.title:
+				pass 
+
+			if incoterm.title.lower().startswith("ups"):
+				target.collect_account_type = "UPS"
+			if incoterm.title.lower().startswith("fedex"):
+				target.collect_account_type = "FEDEX"
+			
+			parsed_dict = parse_key_value_pairs(named_place)
+			if "collect" in parsed_dict:
+				target.collect_account = parsed_dict["collect"]
+
+			if "postal" in parsed_dict:
+				target.collect_postal_code = parsed_dict["postal"]
 			# attempt to poluate collect 
 		#if "|" in target.customer_address_name:
 		#	print("****drop set ")
