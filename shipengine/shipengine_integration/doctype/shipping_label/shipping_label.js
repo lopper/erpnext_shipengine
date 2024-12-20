@@ -344,7 +344,10 @@ var get_shipping_rate_estimates = function (frm) {
 					frappe.msgprint(r.message.errors[0].message)
 					return
 				} else {
-					render_shipping_options(frm, r.message)
+					let shipping_options = r.message;
+					// sort shipping options by price
+					shipping_options.sort((a, b) => a.shipping_amount.amount - b.shipping_amount.amount);
+					render_shipping_options(frm, shipping_options)
 					// make carrier id and service_code empty
 					frm.set_value('service_id', '');
 					frm.set_value('carrier_id', '');
