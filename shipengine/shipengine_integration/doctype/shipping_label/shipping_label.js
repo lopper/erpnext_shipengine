@@ -340,11 +340,17 @@ var get_shipping_rate_estimates = function (frm) {
 						return
 					}
 				}
+				let shipping_options = r.message
 				if (r.message.errors) {
 					frappe.msgprint(r.message.errors[0].message)
 					return
-				} else {
-					let shipping_options = r.message;
+				} else if (shipping_options.length === 0) {
+					frappe.msgprint({
+						title: __('Error'),
+						indicator: 'red',
+						message: __('No shipping options available. Please check the package dimensions and collect account details.')
+					});
+				}else {
 					// sort shipping options by price
 					shipping_options.sort((a, b) => a.shipping_amount.amount - b.shipping_amount.amount);
 					render_shipping_options(frm, shipping_options)
