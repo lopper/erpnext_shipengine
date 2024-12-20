@@ -265,7 +265,7 @@ def estimate_shipping_rates(
 	if collect_account_type:
 		carrier_ids = [
 			carrier.carrier_id for carrier in carriers 
-			if carrier.carrier_code.lower().startswith(collect_account_type.lower() and carrier.collect_enabled)]
+			if carrier.carrier_code.lower().startswith(collect_account_type.lower()) and carrier.collect_enabled]
 
 	rates = get_shipping_rates(
 		shipengine_settings.api_key, 
