@@ -326,10 +326,9 @@ def make_shipping_label(source_name, target_doc=None):
 			named_place = delivery_note.named_place
 			# name_place can encode collect information if it containts collect
 			if not named_place or "collect:" not in named_place.lower():
-				pass
-
+				return
 			if not incoterm or not incoterm.title:
-				pass 
+				return 
 
 			if incoterm.title.lower().startswith("ups"):
 				target.collect_account_type = "UPS"
