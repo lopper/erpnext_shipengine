@@ -152,12 +152,15 @@ frappe.ui.form.on('Shipping Label', {
 		if (frm.doc.package_template) {
 			frappe.db.get_doc('Shipment Parcel Template', frm.doc.package_template)
 				.then(parcel_template => {
-					//frm.set_value('package_weight_uom', parcel_template.weight_uom);
-					frm.set_value('package_size_uom', parcel_template.size_uom);
+					if(parcel_template.weight && parcel_template.weight > 0 ){
+						frm.set_value('package_weight', parcel_template.weight);
+					}
+
+					frm.set_value('package_weight_uom', parcel_template.weight_uom || parcel_template.custom_weight_uom);
+					frm.set_value('package_size_uom', parcel_template.size_uom || parcel_template.custom_size_uom);
 					frm.set_value('package_length', parcel_template.length);
 					frm.set_value('package_width', parcel_template.width);
 					frm.set_value('package_height', parcel_template.height);
-					//frm.set_value('package_weight', parcel_template.weight);
 				})
 				.catch(error => {
 					console.error('Failed to fetch document:', error);
