@@ -231,19 +231,32 @@ frappe.ui.form.on('Shipping Label', {
 });
 
 function render_shipping_options(frm, shipping_options) {
+	for(let i = 0; i < shipping_options.length; i++) {
+		if (!shipping_options[i].carrier_nickname || shipping_options[i].carrier_nickname === "") {
+			shipping_options[i].carrier_nickname = shipping_options[i].carrier_id;
+		}
+	}
+	let carriers = [...new Set(shipping_options.map(option => option.carrier_nickname))]; // Get unique carrier nicknames
 	let html = `<h4>Select a Shipping Option </h4> ${frm.doc.collect_account ? "Third Party Billing Enabled" : ""} `;
+	html += `<div style="margin-bottom: 10px;">
+		<select id="carrier-filter" style="padding: 5px;">
+			<option value="">All Carriers</option>
+			${carriers.map(carrier => `<option value="${carrier}">${carrier}</option>`).join('')}
+		</select>
+	</div>`;
 	if (shipping_options) {
 		shipping_options.forEach(function (option, index) {
 			if (!option.shipping_amount) {
 				return
 			}
 			html += `		
-			<div class="shipping-option" data-service-code="${option.service_code}" data-carrier-id="${option.carrier_id}"  style="padding: 5px; border-bottom: 1px solid #ccc; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+			<div class="shipping-option" data-service-code="${option.service_code}" data-carrier-id="${option.carrier_id}"  data-carrier-nickname="${option.carrier_nickname}"  style="padding: 5px; border-bottom: 1px solid #ccc; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
 			<div style="display: flex; align-items: center;">
 				<input type="radio" name="shipping_option" value="${option.service_code}" style="margin-right: 10px;">
 				<div>
 					<strong>${option.service_type} ${option.package_type ? option.package_type : ""} (${option.delivery_days ? option.delivery_days : ""} day) </strong><br>
-					<span>Estimated Delivery: ${option.carrier_delivery_days}</span>
+					<span>Estimated Delivery: ${option.carrier_delivery_days}</span><br/>
+					<span>Carrier: ${option.carrier_nickname}</span>
 				</div>
 			</div>
 			<div style="text-align: right;font-size:20px;font-weight:bolder;color:green">
@@ -279,6 +292,18 @@ function render_shipping_options(frm, shipping_options) {
 		$(this).closest('.shipping-option').css({
 			'background-color': '#f0f8ff', // Light blue color or any color you prefer
 			'border': '1px solid #007bff' // Optional: border color for highlighted state
+		});
+	});
+	$('#carrier-filter').on('change', function () {
+		let selectedCarrier = $(this).val();
+
+		$('.shipping-option').each(function () {
+			let carrierNickname = $(this).data('carrier-nickname');
+			if (selectedCarrier === "" || carrierNickname === selectedCarrier) {
+				$(this).show(); // Show the option if it matches the filter
+			} else {
+				$(this).hide(); // Hide the option if it does not match the filter
+			}
 		});
 	});
 }
