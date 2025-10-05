@@ -37,26 +37,16 @@ def parse_key_value_pairs(input_string):
         result[key.strip()] = value.strip()  # Remove extra spaces and store in dictionary
     return result
 
+
+
+
 class ShippingLabel(Document):
 
 	def validate(self):
 		if self.docstatus == 0:
 			self.status = "Draft"
 	def before_cancel(self):
-		shipengine_settings = frappe.get_doc(SETTING_DOCTYPE)
-		label_id = self.label_id
-		if not label_id:
-			frappe.throw(_("Label_id is not set"))
-
-		result = void_shipping_label(shipengine_settings.api_key, label_id)
-		if result.get('errors'):
-			frappe.throw(result["errors"][0]['message'])
-
-		if result["approved"]:
-			frappe.msgprint(result["message"])
-		else:
-			frappe.throw(result['message'])
-			
+		pass
 
 	def on_submit(self):
 		if flt(self.package_weight) <= 0:
@@ -283,7 +273,29 @@ def estimate_shipping_rates(
 		)
 	return rates
 
+@frappe.whitelist()
+def create_refund(docname):
+	"""API endpoint to handle refund creation for a Shipping Label."""
+	doc = frappe.get_doc("Shipping Label", docname)
 
+	if doc.docstatus != 1:
+		frappe.throw("Only submitted Shipping Labels can be refunded.")
+
+	shipengine_settings = frappe.get_doc(SETTING_DOCTYPE)
+	label_id = doc.label_id
+	if not label_id:
+		frappe.throw(_("Label_id is not set"))
+
+	result = void_shipping_label(shipengine_settings.api_key, label_id)
+	if result.get('errors'):
+		frappe.throw(result["errors"][0]['message'])
+
+	if result["approved"]:
+		frappe.msgprint(result["message"])
+		doc.flags.ignore_permissions = True
+		doc.cancel()
+	else:
+		frappe.throw(result['message'])
 
 @frappe.whitelist()
 def make_shipping_label(source_name, target_doc=None):

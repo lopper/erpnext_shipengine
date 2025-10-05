@@ -54,22 +54,49 @@ frappe.ui.form.on('Shipping Label', {
 		frm.fields_dict.shipping_options_html.$wrapper.html('');
 
 	},
-	refresh: function (frm) {
+	refresh(frm) {
+		// Hide unwanted address divs
 		$('div[data-fieldname=company_address] > div > .clearfix').hide();
 		$('div[data-fieldname=customer_address] > div > .clearfix').hide();
-		if (frm.doc.docstatus === 0) {
-			/*
-			frm.add_custom_button(__('Estimate Shipping Rate'), function () {
-				get_shipping_rate_estimates(frm);
-			});
-			*/
-		}
 
 		if (frm.doc.docstatus === 1) {
-			// Change the "Cancel" button to "Refund"
-			if (frm.page.btn_secondary) {
-				frm.page.btn_secondary[0].innerText = __('Refund');
+			// Add ERPNext's Cancel button manually if it's missing
+			if (!frm.page.btn_secondary.find('.btn:contains("Cancel")').length) {
+				frm.add_custom_button(__('Cancel'), () => {
+					frappe.confirm(
+						__('Are you sure you want to cancel this label? If you need refund the label, refund before canceling.'),
+						() => {
+							frappe.call({
+								method: 'frappe.client.cancel',
+								args: {
+									doctype: frm.doc.doctype,
+									name: frm.doc.name
+								},
+								callback: () => frm.reload_doc()
+							});
+						}
+					);
+				});
 			}
+
+			// Add Refund button separately
+			frm.add_custom_button(__('Refund'), function () {
+				frappe.confirm(
+					__('Are you sure you want to create a refund for this label?'),
+					function () {
+						frappe.call({
+							method: "shipengine.shipengine_integration.doctype.shipping_label.shipping_label.create_refund",
+							args: { docname: frm.doc.name },
+							callback: function (r) {
+								if (!r.exc) {
+									frappe.msgprint(__('Refund created: {0}', [r.message]));
+									frm.reload_doc();
+								}
+							}
+						});
+					}
+				);
+			});
 		}
 	},
 
